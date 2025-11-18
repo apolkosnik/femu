@@ -7,7 +7,7 @@ FDIVHANDLER macro
 	WRITEDEBUG		#.DEBUGOP,INSTRUCTION
 
 	; Increment PC
-	INREMENTPC		#$04
+	INCREMENTPC		#$04
 
 	; Get data
 	GETDATALENGTH	d0
@@ -15,9 +15,16 @@ FDIVHANDLER macro
 	GETREGISTER		d5
 	MOVEFPNTODN		d5,d0,d1
 
-	 ; Emulate instruction
-	 movea.l		MathIeeeDoubBasBase,a6
-	 jsr			_LVOIEEEDPDiv(a6)
+	; Emulate instruction
+	ifd NOMATHLIB
+		; TODO: Implement full software division algorithm
+		; For now, return NaN for division without math library
+		move.l		#$7fffffff,d0
+		move.l		#$ffffffff,d1
+	else
+		movea.l		MathIeeeDoubBasBase,a6
+		jsr			_LVOIEEEDPDiv(a6)
+	endif
 
 	; Write results
 	MOVEDNTOFPN		d5,d0,d1

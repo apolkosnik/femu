@@ -12,7 +12,7 @@ FbccWordHandler
 	
 	; False handler
 	.False:
-	INREMENTPC			#4
+	INCREMENTPC			#4
 	rts
 	
 	; True handler
@@ -20,7 +20,7 @@ FbccWordHandler
 	move.w				INSTRUCTION,d0
 	ext.l				d0
 	addi.l				#2,d0
-	INREMENTPC			d0
+	INCREMENTPC			d0
 		move.l				FAULTPC,$02(STACKFRAME) ; TODO: testing 040 ea from stack...
 	rts
 		
@@ -44,14 +44,14 @@ FbccLongHandler
 
 	; False handler
 	.False:
-	INREMENTPC			#6
+	INCREMENTPC			#6
 	rts
 	
 	; True handler
 	.True:
 	move.l				$02(FAULTPC),d0
 	addi.l				#2,d0
-	INREMENTPC			d0
+	INCREMENTPC			d0
 		move.l				FAULTPC,$02(STACKFRAME) ; TODO: testing 040 ea from stack...
 	rts
 	

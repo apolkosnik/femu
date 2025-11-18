@@ -21,13 +21,13 @@ FdbccHandler
 	move.w				$04(FAULTPC),d0
 	ext.l				d0
 	addi.l				#4,d0
-	INREMENTPC			d0
+	INCREMENTPC			d0
 		move.l				FAULTPC,$02(STACKFRAME) ; TODO: testing 040 ea from stack...
 	rts
 	
 	; True handler
 	.True:
-	INREMENTPC			#$06
+	INCREMENTPC			#$06
 	rts
 	
 	; Debug constants

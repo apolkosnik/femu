@@ -7,7 +7,7 @@ FmoveEaToFpcrHandler
 	WRITEDEBUG		#.DEBUGOP,INSTRUCTION
 
 	; Increment PC
-	INREMENTPC		#$04
+	INCREMENTPC		#$04
 	
 	; Get ea - temporarily faking data format so we can use ordinary functions
 	move.l			INSTRUCTION,-(sp)
@@ -58,7 +58,7 @@ FmoveFpcrToEaHandler
 	WRITEDEBUG		#.DEBUGOP,INSTRUCTION
 
 	; Increment PC
-	INREMENTPC		#$04
+	INCREMENTPC		#$04
 	
 	; Get ea - temporarily faking data format so we can use ordinary functions
 	move.l			INSTRUCTION,-(sp)

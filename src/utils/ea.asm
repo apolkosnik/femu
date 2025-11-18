@@ -108,7 +108,7 @@ ADDBD macro
 	; Long base displacement
 	.BdLong:
 	add.l				(FAULTPC),a0
-	INREMENTPC			#$04
+	INCREMENTPC			#$04
 	bra.s				.BdOk
 	
 	; Word base displacement
@@ -116,7 +116,7 @@ ADDBD macro
 	move.w				(FAULTPC),d0
 	ext.l				d0
 	add.l				d0,a0
-	INREMENTPC			#$02
+	INCREMENTPC			#$02
 	
 	; Base displacement added
 	.BdOk:
@@ -186,8 +186,9 @@ endm
 ;
 ADDODWORD macro
 	move.w				(FAULTPC),d0
+	ext.l				d0
 	add.l				d0,a0
-	INREMENTPC			#2
+	INCREMENTPC			#2
 endm
 
 
@@ -203,7 +204,7 @@ endm
 ;
 ADDODLONG macro
 	add.l				(FAULTPC),a0
-	INREMENTPC			#4
+	INCREMENTPC			#4
 endm
 
 
@@ -323,7 +324,7 @@ GetEa
 	; Ea mode bits are 111, one more jump
 	EeMode111:
 	move.w				(FAULTPC),d1
-	INREMENTPC			#$02
+	INCREMENTPC			#$02
 	btst				#8,d1
 	beq.w				EaAnIndirectIndex8bit
 	bfextu				d1{29:3},d0
@@ -394,7 +395,7 @@ GetEa
 	move.w				(FAULTPC),d1
 	ext.l				d1
 	adda.l				d1,a0
-	INREMENTPC			#$02
+	INCREMENTPC			#$02
 	rts	
 		
 	; Address register indirect with index (8-bit displacement) mode
@@ -494,7 +495,7 @@ GetEa
 	ext.l				d1
 	move.l				FAULTPC,a0
 	add.l				d1,a0
-	INREMENTPC			#$02
+	INCREMENTPC			#$02
 	rts
 		
 	; Absolute short addressing mode
@@ -503,23 +504,23 @@ GetEa
 	swap				d1
 	ext.l				d1
 	movea.l				d1,a0
-	INREMENTPC			#$02
+	INCREMENTPC			#$02
 	rts
 	
 	; Absolute long addressing mode
 	EaAbsoluteLong:
 	move.l				(FAULTPC),a0
-	INREMENTPC			#$04 
+	INCREMENTPC			#$04 
 	rts		
 	
 	; Immediate data
 	EaImmediate:
 	movea.l				FAULTPC,a0
-	INREMENTPC			d0
+	INCREMENTPC			d0
 	cmp.b				#1,d0
 	bne.s				.NoByte
 	adda.l				#1,a0
-	INREMENTPC			#1
+	INCREMENTPC			#1
 	.NoByte:
 	rts
 	

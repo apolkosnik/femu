@@ -7,7 +7,7 @@ FscaleHandler
 	WRITEDEBUG		#.DEBUGOP,INSTRUCTION
 
 	; Increment PC
-	INREMENTPC		#$04
+	INCREMENTPC		#$04
 	
 	; Get scale factor
 	GETDATALENGTH	d0

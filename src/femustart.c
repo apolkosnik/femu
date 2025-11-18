@@ -1,9 +1,10 @@
+#include <stdio.h>
 #include <exec/execbase.h>
 #include <dos/dos.h>
 #include <proto/exec.h>
 
 extern struct ExecBase *SysBase;
-const char* VERSION = "$VER: femustart 0.1";
+const char* VERSION = "$VER: femustart 0.12-WIP (XX-WIP-XXXX)";
 
 #ifndef AFB_68060
 #define AFB_68060 7

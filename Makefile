@@ -13,9 +13,9 @@ FLAGS080V3 = -m68080 -m68882 -DCPU080 -DSTACK080 -DFPN080 -DFPSR080
 
 all: femu femudebug femustart fdebug ftest genccc gentruth
 
-femu: femu.020 femu.020m femu.040 femu.040m femu.080v2 femu.080v2m femu.080 femu.080
+femu: femu.020 femu.020m femu.040 femu.040m femu.080v2 femu.080v2m femu.080 femu.080m
 
-femudebug: femu.020d femu.040d femu.080v2d femu.080
+femudebug: femu.020d femu.040d femu.080v2d femu.080d
 
 femu.020: $(SRCFILES)
 	$(ASM) $(FLAGS020) -o $(OBJDIR)/$@.o $(SRCDIR)/femu.asm 
@@ -54,14 +54,14 @@ femu.080v2m: $(SRCFILES)
 	$(LINK) -bamigahunk -o $(BINDIR)/$@ $(OBJDIR)/$@.o
     
 femu.080: $(SRCFILES)
-	$(ASM)  $(FLAGS080V3) -o $(OBJDIR)/$@.o $(SRCDIR)/femu.asm 
+	$(ASM)  $(FLAGS080V3) -o $(OBJDIR)/$@.o $(SRCDIR)/femu.asm
 	$(LINK) -bamigahunk -o $(BINDIR)/$@ $(OBJDIR)/$@.o
-	
-femu.080: $(SRCFILES)
-	$(ASM) $(FLAGS080V3) -DDEBUG -o $(OBJDIR)/$@.o $(SRCDIR)/femu.asm 
+
+femu.080d: $(SRCFILES)
+	$(ASM) $(FLAGS080V3) -DDEBUG -o $(OBJDIR)/$@.o $(SRCDIR)/femu.asm
 	$(LINK) -bamigahunk -o $(BINDIR)/$@ $(OBJDIR)/$@.o -ldebug
-	
-femu.080: $(SRCFILES)
+
+femu.080m: $(SRCFILES)
 	$(ASM) $(FLAGS080V3) -DNOMATHLIB -o $(OBJDIR)/$@.o $(SRCDIR)/femu.asm
 	$(LINK) -bamigahunk -o $(BINDIR)/$@ $(OBJDIR)/$@.o
 

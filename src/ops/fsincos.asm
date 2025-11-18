@@ -7,7 +7,7 @@ FsincosHandler
 	WRITEDEBUG		#.DEBUGOP,INSTRUCTION
 		
 	; Increment PC
-	INREMENTPC		#$04
+	INCREMENTPC		#$04
 	
 	; Get data
 	GETDATALENGTH	d0

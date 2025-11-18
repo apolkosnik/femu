@@ -7,7 +7,7 @@ FsaveHandler
 	WRITEDEBUG		#.DEBUGOP,INSTRUCTION
 
 	; Increment PC
-	INREMENTPC		#$02
+	INCREMENTPC		#$02
     
 	; Get ea - temporarily faking data format so we can use ordinary functions
 	move.l			INSTRUCTION,-(sp)

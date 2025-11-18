@@ -7,7 +7,7 @@ FmovecrHandler
 	WRITEDEBUG		#.DEBUGOP,INSTRUCTION
 
 	; Increment PC
-	INREMENTPC		#$04
+	INCREMENTPC		#$04
 	
 	; Emulate instruction
 	bfextu			INSTRUCTION{25:7},d0

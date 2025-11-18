@@ -197,10 +197,9 @@ endm
 
 
 ;
-; Shifts stack and stack frame to left. Please notice
-; that this macro is highly inefficient since it moves
-; memory byte by byte and has some stupid other things.
-; 
+; Shifts stack and stack frame to left.
+; NOTE: Could be optimized to use move.l for 4-byte aligned chunks
+;
 ; INPUTS
 ;	\1 -- Data length.
 ;	STACKFRAME -- Stack frame address.
@@ -208,14 +207,14 @@ endm
 ; RESULT
 ;	a0 -- Effective address.
 ;
-STACKSL macro 
+STACKSL macro
 
 	; Calculate region to shift
 	movea.l		sp,a0
 	movea.l		STACKFRAME,a1
 	adda.l		#STACKLENGTH,a1
-	
-	; Shift region 
+
+	; Shift region (byte by byte for safety with overlapping regions)
 	neg.l		\1
 	.\@Loop:
 	move.b		(a0),(a0,\1.l)
@@ -223,19 +222,18 @@ STACKSL macro
 	cmpa.l		a0,a1
 	bgt.s		.\@Loop
 	neg.l		\1
-	
+
 	; Update pointers
 	suba.l		\1,sp
 	suba.l		\1,STACKFRAME
 	suba.l		\1,a0
-	
+
 endm
 
 ;
-; Shifts stack and stack frame to right. Please notice
-; that this macro is highly inefficient since it moves
-; memory byte by byte and has some stupid other things.
-; 
+; Shifts stack and stack frame to right.
+; NOTE: Could be optimized to use move.l for 4-byte aligned chunks
+;
 ; INPUTS
 ;	\1 -- Data length.
 ;	STACKFRAME -- Stack frame address.
@@ -243,7 +241,7 @@ endm
 ; RESULT
 ;	a0 -- Effective address.
 ;
-STACKSR macro 
+STACKSR macro
 
 	; Calculate region to backup
 	movea.l		STACKFRAME,a0
@@ -252,30 +250,30 @@ STACKSR macro
 	adda.l		\1,a1
 	lea.l		TempEa,a2
 
-	; Backup region 
+	; Backup region (byte by byte for safety)
 	.\@Backup:
 	move.b		(a0),(a2)
 	adda.l		#1,a0
 	adda.l		#1,a2
 	cmpa.l		a0,a1
 	bgt.s		.\@Backup
-	
+
 	; Calculate region to shift
 	movea.l		STACKFRAME,a1
 	adda.l		#STACKLENGTH,a1
-	
-	; Shift region
+
+	; Shift region (byte by byte for safety with overlapping regions)
 	.\@Loop:
 	suba.l		#1,a1
 	move.b		(a1),(a1,\1.l)
 	cmpa.l		sp,a1
 	bgt.s		.\@Loop
-	
+
 	; Update pointers
 	adda.l		\1,sp
 	adda.l		\1,STACKFRAME
 	lea.l		TempEa,a0
-	
+
 endm
 
 
@@ -285,7 +283,7 @@ endm
 ; INPUTS
 ;	\1 -- Amount.
 ;
-INREMENTPC macro 
+INCREMENTPC macro 
 	add.l		\1,FAULTPC
 endm
 
