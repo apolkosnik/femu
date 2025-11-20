@@ -86,6 +86,14 @@ fdivtest: $(SRCFILES)
 	$(ASM) -m68020 -DNOMATHLIB -DSTACK020 -no-opt -o $(OBJDIR)/$@.o $(SRCDIR)/fdivtest.asm
 	$(LINK) -bamigahunk -o $(BINDIR)/$@ $(OBJDIR)/$@.o
 
+fmultest: $(SRCFILES)
+	$(ASM) -m68020 -DNOMATHLIB -DSTACK020 -no-opt -o $(OBJDIR)/$@.o $(SRCDIR)/fmultest.asm
+	$(LINK) -bamigahunk -o $(BINDIR)/$@ $(OBJDIR)/$@.o
+
+fsqrttest: $(SRCFILES)
+	$(ASM) -m68020 -DNOMATHLIB -DSTACK020 -no-opt -o $(OBJDIR)/$@.o $(SRCDIR)/fsqrttest.asm
+	$(LINK) -bamigahunk -o $(BINDIR)/$@ $(OBJDIR)/$@.o
+
 genccc: $(SRCFILES)
 	vasmm68k_mot -m68020 -m68881 -Fhunkexe $(SRCDIR)/$@.ASM -o $(BINDIR)/$@
 	
